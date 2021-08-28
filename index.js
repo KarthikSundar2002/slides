@@ -27,7 +27,28 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
+const SlideSchema = new mongoose.Schema({
+    email: {
+        type:String,
+        required:true
+    },
+    title: {
+        type: String,
+        required: true,
+        default: "Title"
+    },
+    NoOfSlides: {
+        type: Number,
+        required:true,
+        default:0
+    },
+    AllInputIds: [String],
+    AllValues:[String],
+    AllInputStyles:[String]
+})
+
 const User = mongoose.model("User",UserSchema);
+const Slide = mongoose.model("Slide",SlideSchema);
 
 app.get("/",(req,res) => {
 
@@ -67,9 +88,11 @@ app.post("/SignIn", async (req,res) => {
     }
 });
 
-app.post("/save", (req,res) => {
+app.post("/save", async (req,res) => {
     console.log(req.body);
-
+    const ppt = await new Slide({email: SignedInEmail, title: req.body.title, NoOfSlides: req.body.NoOfSlides, AllInputIds: req.body.AllInputIds, AllValues: req.body.AllValues, AllInputStyles: req.body.AllInputStyles});
+    await ppt.save();
+    res.redirect(`/${req.body.title}`);
 })
 
 app.listen(port,()=>{
