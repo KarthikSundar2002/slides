@@ -29,17 +29,23 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model("User",UserSchema);
 
 app.get("/",(req,res) => {
-    if(sessionStorage.getItem("user") != null){
-        res.render("Presentation");
-    }else{
+
         res.render("SignIn");
-    }
+
 
 });
 
 app.get("/SignUp",(req,res) => {
     res.render("SignUp");
 });
+
+app.get("/Presentation",(req,res) => {
+    res.render("Presentation");
+})
+
+app.get("/Create",(req,res)=>{
+    res.render("Create");
+})
 
 app.post("/SignUp", async (req,res) => {
     console.log(req.body);
@@ -53,8 +59,8 @@ app.post("/SignIn", async (req,res) => {
     const user = await User.findOne({ email: req.body.email});
     if(user.password === req.body.password){
         console.log("Logged In");
-        sessionStorage.setItem("user",user._id);
-        res.redirect("/");
+
+        res.redirect("/Presentation");
     }
 })
 
