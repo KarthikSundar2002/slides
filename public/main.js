@@ -59,8 +59,18 @@ if(MainSlides.length != 0){
                 textbox.style.left = e.clientX - rect.left + "px";
                 textbox.style.top = e.clientY - rect.top + "px";
                 textbox.contentEditable = true;
-        
+
+
+
                 WorkPlace.appendChild(textbox);
+                textbox.addEventListener("mousedown",(e) => {
+                    console.log(e.button);
+                    if(e.button == 2){
+                        WorkPlace.removeChild(textbox);
+                    }
+                })
+
+
             })
         })
     })
@@ -127,6 +137,13 @@ function CreateMainSlide(){
         textbox.contentEditable = true;
 
         WorkPlace.appendChild(textbox);
+
+        textbox.addEventListener("mousedown",(e) => {
+                    console.log(e.button);
+                    if(e.button == 2){
+                        WorkPlace.removeChild(textbox);
+                    }
+                })
     })
 
 
