@@ -67,8 +67,14 @@ app.get("/Presentation",(req,res) => {
 
 app.get("/Create",(req,res)=>{
 
-    res.render("Create");
+    res.render("Create",{title: "Title", NoOfSlides:0, AllInputIds: [], AllValues: [], AllInputStyles: []});
 
+})
+
+app.get("/:title",async (req,res)=>{
+    const slide = await Slide.findOne({title: req.params.title})
+
+    res.render("Create",{title: req.params.title, NoOfSlides: slide.NoOfSlides, AllInputIds: slide.AllInputIds, AllValues: slide.AllValues, AllInputStyles: slide.AllInputStyles})
 })
 
 app.post("/SignUp", async (req,res) => {

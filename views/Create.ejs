@@ -6,16 +6,33 @@
             <button class="btn btn-secondary" id="NewSlide">New Slide</button>
         </div>
 
-        <h4 class="mx-auto"id="Title" contenteditable="true">Title</h4>
+        <h4 class="mx-auto"id="Title" contenteditable="true"><%- title %></h4>
         <button class="btn btn-secondary float-right" id="Save">Save</button>
 
     </div>
     <div class="WorkArea">
         <div class="SideBar">
-
+            <% for( let i = 1; i <= NoOfSlides ; i++ ) { %>
+                <div class="card SideSlides SideSlide-<%- i %>">
+                    <div class="card-body">
+                        <p class="card-text">Slide-<%- i %></p>
+                    </div>
+                </div>
+            <% } %>
         </div>
         <div class="Mainview">
-            
+            <% for( let i = 1; i <= NoOfSlides ; i++ ) { %>
+                <div class="card MainSlides MainSlide-<%- i %>">
+                    <div class="card-body">
+                        <% for( let j = 0; j < AllInputIds.length; j++ ) { %>
+                            <% if (AllInputIds[j].slice(6,7) == i) { %>
+                                <input class="text" id='<%- AllInputIds[j] %>' contenteditable="true" style='<%-AllInputStyles[j]%>' value='<%- AllValues[j] %>'>
+                            <% } %>
+                        <% } %>
+
+                    </div>
+                </div>
+            <% } %>
         </div>
     </div>
 
