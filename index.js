@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 const app = express();
 
+let SignedInEmail = "";
 
 app.set("view engine","ejs");
 app.use(express.json());
@@ -44,7 +45,9 @@ app.get("/Presentation",(req,res) => {
 })
 
 app.get("/Create",(req,res)=>{
+
     res.render("Create");
+
 })
 
 app.post("/SignUp", async (req,res) => {
@@ -59,9 +62,14 @@ app.post("/SignIn", async (req,res) => {
     const user = await User.findOne({ email: req.body.email});
     if(user.password === req.body.password){
         console.log("Logged In");
-
+        SignedInEmail = req.body.email;
         res.redirect("/Presentation");
     }
+});
+
+app.post("/save", (req,res) => {
+    console.log(req.body);
+
 })
 
 app.listen(port,()=>{
