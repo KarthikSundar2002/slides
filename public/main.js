@@ -6,10 +6,65 @@ const Mainview = document.querySelector(".Mainview");
 
 let SideSlides = document.querySelectorAll(".SideSlides");
 let MainSlides = document.querySelectorAll(".MainSlides");
+let InputLength = document.querySelectorAll(".text").length;
 
-let SlideNumber = 1;
-let textnumber = 1;
+let SlideNumber = SideSlides.length + 1;
+let textnumber = InputLength + 1;
 let isTyping = false;
+
+if(SideSlides.length != 0){
+    console.log(SideSlides);
+
+    SideSlides.forEach((slide) => {
+        console.log(slide.classList[2]);
+        slide.addEventListener("click",(e) => {
+
+
+            let mainSlide = document.getElementsByClassName("MainSlide-"+slide.classList[2].slice(10))[0];
+            MainSlides = document.querySelectorAll(".MainSlides");
+            MainSlides.forEach((slide) => {
+                console.log(slide);
+                slide.classList.add("hidden");
+                let inputfields = slide.querySelectorAll(".text");
+                inputfields.forEach((input) => {
+                    input.classList.add("hidden");
+                })
+            });
+            mainSlide.classList.remove("hidden");
+            let inputs = mainSlide.querySelectorAll(".text");
+            inputs.forEach((input) => {
+                input.classList.remove("hidden");
+            })
+        })
+    })
+}
+
+if(MainSlides.length != 0){
+    console.log(MainSlides);
+
+    MainSlides.forEach((MainSlide) => {
+        let workplaces = MainSlide.querySelectorAll(".card-body");
+        let SpecificSlideNumber = MainSlide.classList[2].slice(10);
+        workplaces.forEach((WorkPlace) => {
+            WorkPlace.addEventListener("dblclick",(e) => {
+
+                let textbox = document.createElement("input");
+                let rect = WorkPlace.getBoundingClientRect();
+        
+                textbox.classList.add("text");
+                textbox.setAttribute("id","Slide-"+SpecificSlideNumber+"-text-"+textnumber);
+                textnumber++;
+        
+                textbox.style.position = "absolute";
+                textbox.style.left = e.clientX - rect.left + "px";
+                textbox.style.top = e.clientY - rect.top + "px";
+                textbox.contentEditable = true;
+        
+                WorkPlace.appendChild(textbox);
+            })
+        })
+    })
+}
 
 
 
@@ -75,11 +130,7 @@ function CreateMainSlide(){
     })
 
 
-    WorkPlace.addEventListener("keydown",(e) => {
-        if(e.key == "Enter"){
-            isTyping = false;
-        }
-    })
+
     MainSlides = document.querySelectorAll(".MainSlides");
     return slide;
 
